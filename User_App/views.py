@@ -8,6 +8,7 @@ from .forms import DeliveryAddressForm
 from django.contrib import messages
 from .forms import SearchForm
 from Admin_App.models import Item, Category  # Import the models from the admin app
+from  django.http import HttpResponse
 
 
 
@@ -369,7 +370,7 @@ def view_profile(request):
     user_name = request.session.get('user_name')
     viewer = get_object_or_404(Viewers, id=user_id)
 
-    # Fetch user's cart and orders (optional)
+    
     cart_items = Cart.objects.filter(user=viewer)
     orders = BuyNow.objects.filter(user=viewer)
     reviews = review.objects.filter(user=viewer)
@@ -386,11 +387,14 @@ def view_profile(request):
 
 
 def search_products(request):
-    query = request.POST.get('query', '')  # Get search query from POST request
-    results = Item.objects.filter(item_name__icontains=query)  # Filter items by name
+    query = request.POST.get('query', '')  
+    results = Item.objects.filter(item_name__icontains=query)  
 
     return render(request, 'search_results.html', {'results': results, 'query': query})
 
+def git(request):
+    return HttpResponse("Welcome to Github")
+    
 
 
 

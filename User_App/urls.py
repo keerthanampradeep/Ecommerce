@@ -22,6 +22,8 @@ urlpatterns = [
     path('payment_success/<int:payment_id>/', views.payment_success, name='payment_success'),
     path('view_profile',views.view_profile,name="view_profile"),
     path('search',views.search_products, name='search_products'),
+    path('git',views.git, name='git'),
+
 
 
 
