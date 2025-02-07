@@ -1,0 +1,44 @@
+{% extends 'Admin_home.html' %}
+{% block content %}
+
+
+<!-- Payments Table -->
+<div class="card">
+    <h5 class="card-header">Payment Details</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Product Name</th>
+                    <th>Payment Method</th>
+                    <th>Payment Status</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for payment in payments %}
+                <tr>
+                    <td>{{ payment.user.username }}</td>
+                    <td>{{ payment.orders.product.item_name }}</td>
+                    <td>{{ payment.payment_method }}</td>
+                    <td>
+                        <span class="badge 
+                            {% if payment.payment_status == 'PENDING' %} bg-warning 
+                            {% elif payment.payment_status == 'COMPLETED' %} bg-success 
+                            {% elif payment.payment_status == 'FAILED' %} bg-danger 
+                            {% elif payment.payment_status == 'REFUNDED' %} bg-info {% endif %}">
+                            {{ payment.get_payment_status_display }}
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">No Payments Found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

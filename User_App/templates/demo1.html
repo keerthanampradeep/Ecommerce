@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto E-commerce Carousel</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .carousel-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 50px auto;
+      position: relative;
+      overflow: hidden;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .carousel {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-item {
+      min-width: 100%;
+      text-align: center;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+
+    .description {
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-top: 1px solid #ddd;
+    }
+
+    .description h2 {
+      font-size: 24px;
+      color: #333;
+      margin: 10px 0;
+    }
+
+    .description p {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 40px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .arrow.left {
+      left: 10px;
+    }
+
+    .arrow.right {
+      right: 10px;
+    }
+
+    .arrow:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel-container">
+    <div class="arrow left" onclick="moveSlide(-1)">&#10094;</div>
+    <div class="carousel">
+      <div class="carousel-item">
+        <img src="https://via.placeholder.com/1200x500?text=Product+1" alt="Product 1">
+        <div class="description">
+          <h2>Product 1</h2>
+          <p>This is a brief description of Product 1. It includes its main features and price details.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://via.placeholder.com/1200x500?text=Product+2" alt="Product 2">
+        <div class="description">
+          <h2>Product 2</h2>
+          <p>This is a brief description of Product 2. It includes its main features and price details.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://via.placeholder.com/1200x500?text=Product+3" alt="Product 3">
+        <div class="description">
+          <h2>Product 3</h2>
+          <p>This is a brief description of Product 3. It includes its main features and price details.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://via.placeholder.com/1200x500?text=Product+4" alt="Product 4">
+        <div class="description">
+          <h2>Product 4</h2>
+          <p>This is a brief description of Product 4. It includes its main features and price details.</p>
+        </div>
+      </div>
+    </div>
+    <div class="arrow right" onclick="moveSlide(1)">&#10095;</div>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const carousel = document.querySelector('.carousel');
+    const slides = document.querySelectorAll('.carousel-item');
+    const totalSlides = slides.length;
+
+    function moveSlide(direction) {
+      currentIndex += direction;
+      if (currentIndex < 0) {
+        currentIndex = totalSlides - 1; // Wrap to the last slide
+      } else if (currentIndex >= totalSlides) {
+        currentIndex = 0; // Wrap to the first slide
+      }
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      const offset = currentIndex * -100; // 100% per slide
+      carousel.style.transform = `translateX(${offset}%)`;
+    }
+
+    function autoSlide() {
+      moveSlide(1); // Move to the next slide
+    }
+
+    // Auto slide every 5 seconds
+    setInterval(autoSlide, 5000);
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+login error_message
+
+
+
+
+<div class="login-wrapper" id="signup-content">
+  <div class="login-content">
+      <a href="#" class="close">x</a>
+      <h3>Sign Up</h3>
+
+      <!-- Error Message -->
+      {% if error_message %}
+      <p style="color: red; font-weight: bold; margin-bottom: 20px;">{{ error_message }}</p>
+      {% endif %}
+
+      <form method="post" action="{% url 'login_error' %}" method="post">
+          {% csrf_token %}
+          <div class="row">
+              
+         
+          <div class="row">
+              <label for="email-2">
+                  Your Email:
+                  <input type="email" name="email" id="email-2" placeholder="example@example.com" required="required" style="text-transform: none;" />
+              </label>
+          </div>
+
+          
+          <div class="row">
+              <label for="password-2">
+                  Password:
+                  <input type="password" name="password" id="password-2" placeholder="Create a strong password" required="required" style="text-transform: none;" />
+              </label>
+          </div>
+
+
+
+          <div class="row">
+              <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                  Sign in
+              </button>
+          </div>
+      </form>
+  </div>
+</div>
+
+  </body>
+
+
+
+
+
+
+
+  <center>
+    <div class="product-details-page">
+    <div class="product-banner">
+    {% for i in details %}
+        <img src="{{ i.item_picture.url }}" alt="{{ i.name }}" class="">
+    </div>
+    
+    
+    <div class="product-content">
+        <h1 class="item_name">{{ i.item_name }}</h1>
+        <p class="item_price">Price: {{ i.item_price }}</p>
+        <p class="item_category">Category: {{ i.item_category.name }}</p>
+        <p class="product_description">Product Description: {{ i.product_description }}</p>
+       
+    </div>
+
+    <div class="product-actions">
+        <a href="{% url 'user_home'%}" class="btn-back" >Back to Products</a><br>
+        <button type="submit" class="btn btn-primary">Add to cart</button>
+        
+
+    </div>
+</center>
+</div>
+{% endfor %}
+
+</div><!-- End .dropdown-cart-total -->
+</div><!-- End .dropdown-menu -->
+
+
+
+
+
+
+<div class="container">
+  <h2>Add Delivery Address</h2>
+  <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Add Address</button>
+  </form>
+  </div>
+
+  add_delivery _address
+
+
+  {% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Hexashop - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/icons/favicon-32x32.png'%}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/icons/favicon-16x16.png'%}">
+    <link rel="manifest" href="{% static 'assets/images/icons/site.html'%}">
+    <link rel="mask-icon" href="{% static 'assets/images/icons/safari-pinned-tab.svg'%}" color="#666666">
+    <link rel="shortcut icon" href="{% static 'assets/images/icons/favicon.ico'%}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/icons/apple-touch-icon.png'%}">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/owl-carousel/owl.carousel.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/magnific-popup/magnific-popup.css'%}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/nouislider/nouislider.css'%}">
+    
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .form-container{
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+
+        }
+        h2 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        form label {
+            font-weight: bold;
+            color: #495057;
+        }
+        form input, form select, form textarea {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button {
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff9900;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e68900;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        </style>
+
+
+
+</head>
+<body>
+    
+    
+   
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+

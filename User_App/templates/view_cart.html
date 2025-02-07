@@ -1,0 +1,353 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/checkout.html  22 Nov 2019 09:55:06 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Molla - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/icons/apple-touch-icon.png'%}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/icons/favicon-32x32.png'%}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/icons/favicon-16x16.png'%}">
+    <link rel="manifest" href="{% static 'assets/images/icons/site.html'%}">
+    <link rel="mask-icon" href="{% static 'assets/images/icons/safari-pinned-tab.svg'%}" color="#666666">
+    <link rel="shortcut icon" href="{% static 'assets/images/icons/favicon.ico'%}">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css'%}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <style>
+    
+    .cart-container {
+        max-width: 900px;
+        margin: auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .cart-header {
+        background: #fff;
+        color: #fff;
+        padding: 15px;
+        border-radius: 10px 10px 0 0;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background: #e9ecef;
+    }
+    .cart-item img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+    .cart-summary {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+        text-align: right;
+    }
+    .btn-remove {
+        color: #dc3545;
+        font-size: 14px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .btn-remove:hover {
+        color: #b02a37;
+        text-decoration: underline;
+    }
+    .checkout-buttons {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .btn-lg {
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+    .empty-cart-message {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 20px;
+            color: #6c757d;
+        }
+        .cart-item-actions {
+            text-align: right;
+        }
+        .cart-item-actions a {
+            color: #dc3545;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .cart-item-actions a:hover {
+            color: #b02a37;
+            text-decoration: underline;
+        }
+        
+</style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-left">
+                        <div class="header-dropdown">
+                            <a href="#">Usd</a>
+                            <div class="header-menu">
+                                <ul>
+                                    <li><a href="#">Eur</a></li>
+                                    <li><a href="#">Usd</a></li>
+                                </ul>
+                            </div><!-- End .header-menu -->
+                        </div><!-- End .header-dropdown -->
+
+                        <div class="header-dropdown">
+                            <a href="#">Eng</a>
+                            <div class="header-menu">
+                                <ul>
+                                    <li><a href="#">English</a></li>
+                                    <li><a href="#">French</a></li>
+                                    <li><a href="#">Spanish</a></li>
+                                </ul>
+                            </div><!-- End .header-menu -->
+                        </div><!-- End .header-dropdown -->
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right">
+                        <ul class="top-menu">
+                            <li>
+                                <a href="#">Links</a>
+                                <ul>
+                                    <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
+                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a></li>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li>
+                                    <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
+                                </ul>
+                            </li>
+                        </ul><!-- End .top-menu -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-top -->
+
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+
+                        <a href="index.html" class="logo">
+                            <img src="{% static 'assets/images/logo.png' %}" alt="Molla Logo" width="105" height="25">
+                        </a>
+
+                        
+
+                                    
+
+                                            
+
+                                                
+
+                                               
+
+                                               
+                                               
+
+                                           
+
+                                    
+                                                
+
+                                            
+                                            
+                                        
+                               
+
+                          
+                            
+                                    
+
+                                
+                        
+
+                            
+                                           
+
+                                         
+                                
+
+                                        
+                                       
+
+                                
+                                
+        </header><!-- End .header -->
+
+     
+        <main class="main">
+            <div class="page-header text-center" style="background-image: url('/static/assets/images/page-header-bg.jpg'); padding: 40px 0;">
+                <div class="container">
+                    <h1 class="page-title text-primary">Your Cart <span class="text-primary">Shop</span></h1>
+                </div>
+            </div>
+        
+            <div class="container cart-container mt-5">
+                <div class="cart-header">
+                    <h3>Your Shopping Cart</h3>
+                </div>
+        
+                {% if cart_items %}
+                <div class="cart-items">
+                    {% for item in cart_items %}
+                    <div class="cart-item-card">
+                        <img src="{{ item.product.item_picture.url }}" alt="Product Image">
+                        <div class="cart-item-details">
+                            <h5>{{ item.product.item_name }}</h5>
+                            <p>${{ item.product.item_price }} each</p>
+                            <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                            <p><strong>Total:</strong> ${{ item.total_price }}</p>
+                        </div>
+                        <div class="cart-item-actions">
+                            <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+        
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <h4>Total Amount: <strong>${{ cart_total }}</strong></h4>
+                </div>
+        
+                <!-- Buttons -->
+                <div class="checkout-buttons">
+                    <a href="{% url 'user_home' %}" class="btn btn-outline-secondary btn-lg">Continue Shopping</a>
+                </div>
+        
+                {% else %}
+                <div class="empty-cart-message">
+                    <p>Your cart is empty.</p>
+                    <a href="{% url 'user_home' %}" class="btn btn-outline-secondary btn-lg">Back to Shop</a>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+        
+        
+    
+
+    
+
+
+
+<footer class="footer1">
+    <div class="footer-middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="widget widget-about">
+                        <img src="{% static 'assets/images/logo.png'%}" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                        <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+
+                        <div class="social-icons">
+                            <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                            <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                            <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                            <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+                            <a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
+                        </div><!-- End .soial-icons -->
+                    </div><!-- End .widget about-widget -->
+                </div><!-- End .col-sm-6 col-lg-3 -->
+
+                <div class="col-sm-6 col-lg-3">
+                    <div class="widget">
+                        <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+                        <ul class="widget-list">
+                            <li><a href="about.html">About Molla</a></li>
+                            <li><a href="#">How to shop on Molla</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="contact.html">Contact us</a></li>
+                            <li><a href="login.html">Log in</a></li>
+                        </ul><!-- End .widget-list -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-sm-6 col-lg-3 -->
+
+                <div class="col-sm-6 col-lg-3">
+                    <div class="widget">
+                        <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                        <ul class="widget-list">
+                            <li><a href="#">Payment Methods</a></li>
+                            <li><a href="#">Money-back guarantee!</a></li>
+                            <li><a href="#">Returns</a></li>
+                            <li><a href="#">Shipping</a></li>
+                            <li><a href="#">Terms and conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul><!-- End .widget-list -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-sm-6 col-lg-3 -->
+                <div class="col-sm-6 col-lg-3">
+                    <div class="widget">
+                        <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                        <ul class="widget-list">
+                            <li><a href="#">Sign In</a></li>
+                            <li><a href="cart.html">View Cart</a></li>
+                            <li><a href="#">My Wishlist</a></li>
+                            <li><a href="#">Track My Order</a></li>
+                            <li><a href="#">Help</a></li>
+                        </ul><!-- End .widget-list -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-sm-6 col-lg-3 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .footer-middle -->
+
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+            <figure class="footer-payments">
+                <img src="{% static 'assets/images/payments.png'%}" alt="Payment methods" width="272" height="20">
+            </figure><!-- End .footer-payments -->
+        </div><!-- End .container -->
+    </div><!-- End .footer-bottom -->
+</footer><!-- End .footer -->
+</div><!-- End .page-wrapper -->
+<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+
+            </div><!-- End .product-details-footer -->
+        </div><!-- End .product-details -->
+    </div><!-- End .col-md-6 -->
+</div><!-- End .row -->
+</div><!-- End .product-details-top -->
+
+

@@ -1,0 +1,10 @@
+h1>Reviews for {{ item.item_name }}</h1>
+<ul>
+    {% for review in reviews %}
+        <li>
+            <strong>{{ review.user.username }}</strong>: {{ review.comment }}
+            <br>
+            <em>Rating: {{ review.rating }}/5</em>
+        </li>
+    {% endfor %}
+</ul>

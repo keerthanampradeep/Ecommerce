@@ -1,0 +1,35 @@
+
+{% extends 'Admin_home.html' %}
+{% block content %}
+<br><br>
+
+<!-- Horizontal Row for Cards -->
+<div class="container">
+    <div class="row">
+        {% for i in a %}
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="row g-0">
+                        <div class="col-md-12">
+                            <!-- Center the card title using text-center class -->
+                            <h5 class="card-title text-center">{{ i.item_name }}</h5><br>
+                            <h5 class="card-title text-center">{{ i.item_category }}</h5>
+                            <h5 class="card-title text-center">{{ i.item_picture.url }}</h5>
+                            <h5 class="card-title text-center">{{ i.item_price }}</h5>
+                            <h5 class="card-title text-center">{{ i.product_description }}</h5>
+
+
+
+                            
+                            <!-- Image with object-fit: cover to fill the card without distortion -->
+                            <img src="{{ i.item_picture.url }}" alt="{{ i.name }}" class="card-img-top" style="height: 300px; 
+                            width:200px ;object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

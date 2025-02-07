@@ -1,0 +1,41 @@
+{% extends 'Admin_home.html' %}
+{% block content %}
+
+
+              <div class="card">
+                <h5 class="card-header">View Review</h5>
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Username</th>
+                        <th>Item</th>
+                        <th>Text</th>
+                        <th>Posted On</th>
+
+                        
+                        
+                        
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    {% for i in l %}
+                      <tr>
+                        <td>{{i.user.username}}</td>
+                        <td>{{i.item.item_name}}</td>
+                        <td>{{i.text}}</td>
+                        <td>{{i.created_at}}</td>
+                        
+                    
+                          
+                      </tr>
+                      {% endfor %}
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!--/ Basic Bootstrap Table -->
+
+
+{% endblock%}

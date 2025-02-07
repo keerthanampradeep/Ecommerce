@@ -1,0 +1,56 @@
+{% extends 'Admin_home.html' %}
+{% block content %}
+
+
+              <div class="card">
+                <h5 class="card-header">Manage Products</h5>
+                <div class="table-responsive text-nowrap">
+                  <table class="table"> 
+                    <thead>
+                      <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                        <th>Product Description</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      {% for i in c %}
+                      <tr>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{i.item_name}}</strong></td>
+                        <td>{{i.item_category.name}}</td>
+                        <td>{{i.item_price}}</td>
+                        <td>
+                          <img src="{{ i.item_picture.url }}" alt="Product Image" style="max-width: 100px; max-height: 100px;">
+                      </td>
+                      
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{i.product_description}}</strong></td>
+                       
+                        
+
+
+                        
+                            <td>  
+                              <a href="{% url 'product_delete' i.id %}"><button type="submit" class="btn btn-outline-danger">Delete</button></a>
+                              <a href="{% url 'update_product' i.id %}"><button type="submit" class="btn btn-outline-primary">Update</button></a>
+                              <a href="{% url 'update_product' i.id %}"><button type="submit" class="btn btn-outline-primary">View Review</button></a>
+
+                            </td>
+                              
+
+                            </tr>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                </div>
+              </div>
+              <!--/ Basic Bootstrap Table -->
+
+
+{% endblock%}

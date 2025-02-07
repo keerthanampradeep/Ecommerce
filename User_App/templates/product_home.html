@@ -1,0 +1,611 @@
+{% load static %}
+{% block content %}
+<html lang="en">
+
+
+<!-- molla/product.html  22 Nov 2019 09:54:50 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Molla - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/icons/favicon-32x32.png'%}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/icons/favicon-16x16.png'%}">
+    <link rel="manifest" href="{% static 'assets/images/icons/site.html'%}">
+    <link rel="mask-icon" href="{% static 'assets/images/icons/safari-pinned-tab.svg'%}" color="#666666">
+    <link rel="shortcut icon" href="{% static 'assets/images/icons/favicon.ico'%}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/icons/apple-touch-icon.png'%}">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/owl-carousel/owl.carousel.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/magnific-popup/magnific-popup.css'%}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/nouislider/nouislider.css'%}">
+    <style>
+
+  .comments-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+  }
+  .comments-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: none;
+    font-size: 14px;
+  }
+  .comments-form textarea:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  .comments-form .post-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .comments-form .post-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .comments-list {
+    max-width: 1800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+
+  }
+  .comment {
+    display: flex;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  .comment:last-child {
+    border-bottom: none;
+  }
+  .comment-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-right: 15px;
+    flex-shrink: 0;
+  }
+  .comment-content {
+    flex: 1;
+  }
+  .comment-content p {
+    margin: 5px 0;
+  }
+  .comment strong {
+    font-size: 16px;
+    color: #333;
+  }
+  .comment-date {
+    font-size: 12px;
+    color: #888;
+    text-align: right;
+  }
+  .no-comments {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+  }
+  /* Container */
+/* Adjust the width of the entire review section */
+.comments-section {
+  max-width: 1200px; /* Increase this value as needed */
+  width: 100%; /* Ensures it takes the full width within the parent container */
+  margin: 40px auto; /* Center the box horizontally */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Adjust width and background color of the comment form */
+.comments-form {
+  max-width: 1900px; /* Increase this value as needed */
+  width: 100%; /* Ensure it takes full width within the parent container */
+  background-color: #f0f0f0; /* Set your desired background color */
+  padding: 20px;
+  border-radius: 10px; /* Optional: Add rounded corners */
+  margin: 0 auto 20px; /* Center the form horizontally and add spacing below */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+}
+
+/* Style for the textarea inside the form */
+.comments-form textarea {
+  width: 100%; /* Full width */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  resize: vertical; /* Allow vertical resizing only */
+  margin-bottom: 10px;
+  background-color: #ffffff; /* Optional: white background for the input area */
+}
+
+/* Style for the submit button */
+.comments-form .post-button {
+  display: inline-block;
+  background-color: #007bff; /* Button background color */
+  color: #ffffff; /* Button text color */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comments-form .post-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Comments List */
+.comments-list {
+  margin-top: 30px;
+}
+
+.comment {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #333;
+}
+
+.comment-date {
+  font-size: 0.85em;
+  color: #777;
+}
+
+.comment-body p {
+  margin: 0;
+  line-height: 1.5;
+  color: #555;
+}
+
+.no-comments {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .comments-section {
+    padding: 15px;
+  }
+
+  .avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .post-button {
+    width: 100%;
+  }
+}
+.comment:hover {
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+}
+.comments-form textarea {
+  transition: box-shadow 0.3s ease;
+}
+.post-button {
+  transition: background-color 0.3s ease;
+}
+
+
+
+
+
+        
+        .rating-container{
+            text-align: center;
+        }
+        .star-rating{
+            direction: rtl;
+            display: inline-flex;
+        }
+        .star-rating input[type="radio"]{
+            display: none;
+        }
+        .star-rating label:hover,.star-rating label:hover ~ label{
+            color:#ffcc00;
+        }
+        .star-rating input[type="radio"]:checked ~ label{
+            color:#ffcc00;
+        }
+        .btn-yellow{
+            background-color: orange;
+            color:black;
+            border:none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+
+
+
+
+        /* Card Hover Effects */
+.card.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Styling */
+.card-img-top {
+    transition: transform 0.3s ease;
+}
+
+.card-img-top:hover {
+    transform: scale(1.05);
+}
+
+/* Typography */
+.card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+}
+
+.card-text {
+    font-size: 0.9rem;
+}
+
+/* Buttons */
+.card-actions a {
+    border-radius: 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004080;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+/* General Layout */
+.product-cards-container {
+    padding: 20px 15px;
+}
+
+.card {
+    margin: 10px;
+}
+
+        </style>
+    <body>
+        
+        {% endblock %}
+        <div class="page-wrapper">
+            <header class="header">
+                <div class="header-top">
+                    <div class="container">
+                        <div class="header-left">
+                            <div class="header-dropdown">
+                                <a href="#">Usd</a>
+                                <div class="header-menu">
+                                    <ul>
+                                        <li><a href="#">Eur</a></li>
+                                        <li><a href="#">Usd</a></li>
+                                    </ul>
+                                </div><!-- End .header-menu -->
+                            </div><!-- End .header-dropdown -->
+    
+                            <div class="header-dropdown">
+                                <a href="#">Eng</a>
+                                <div class="header-menu">
+                                    <ul>
+                                        <li><a href="#">English</a></li>
+                                        <li><a href="#">French</a></li>
+                                        <li><a href="#">Spanish</a></li>
+                                    </ul>
+                                </div><!-- End .header-menu -->
+                            </div><!-- End .header-dropdown -->
+                        </div><!-- End .header-left -->
+    
+                        <div class="header-right">
+                            <ul class="top-menu">
+                                <li>
+                                    <a href="#">Links</a>
+                                    <ul>
+                                        <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
+                                        <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a></li>
+                                        <li><a href="about.html">About Us</a></li>
+                                        <li><a href="contact.html">Contact Us</a></li>
+                                    </ul>
+                                </li>
+                                
+                                
+                            </ul><!-- End .top-menu -->
+                        </div><!-- End .header-right -->
+                    </div><!-- End .container -->
+                </div><!-- End .header-top -->
+    
+                <div class="header-middle sticky-header">
+                    <div class="container">
+                        <div class="header-left">
+                            <button class="mobile-menu-toggler">
+                                <span class="sr-only">Toggle mobile menu</span>
+                                <i class="icon-bars"></i>
+                            </button>
+    
+                            <a href="index.html" class="logo">
+                                <img src="{% static 'assets/images/logo.png'%}" alt="Molla Logo" width="105" height="25">
+                            </a>
+
+                    
+
+                    
+
+                    
+       
+                    
+               
+                
+                
+        
+
+
+    
+       
+
+
+
+    
+
+                    
+            
+            
+</header><!-- End .header -->
+
+<center>
+    <div class="product-cards-container">
+        <div class="row justify-content-center">
+            {% for i in details %}
+            <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                <div class="card product-card" style="background-color: #f8f9fa; border-radius: 10px; overflow: hidden;">
+                    <img src="{{ i.item_picture.url }}" class="card-img-top" alt="{{ i.name }}" style="border-bottom: 1px solid #dee2e6; object-fit: cover; height: 350px;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-dark">{{ i.item_name }}</h5>
+                        <p class="card-text text-muted">Price: <strong>${{ i.item_price }}</strong></p>
+                        <p class="card-category text-secondary">Category: {{ i.item_category.name }}</p>
+                        <p class="card-description text-muted">{{ i.product_description|truncatewords:15 }}</p>
+                        
+
+                        
+                        <div class="card-actions mt-3">
+                            <a href="{% url 'user_home' %}" class="btn btn-outline-secondary btn-sm">Back to Products</a>&nbsp;&nbsp;
+                            <a href="{% url 'add_to_cart' i.id %}" class="btn btn-primary">Add to Cart</a><br><br>
+                            <a href="{% url 'buy_now' i.id %}"><button class="btn-yellow" style="margin-bottom: 20px;">Buy Now</button></a>&nbsp;&nbsp;<br><br>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+
+                            <div class="comments-form">
+                                <form method="post" action="{% url 'add_review' v_id=detail.id %}">
+                                    {% csrf_token %}
+                                    <textarea name="comment_text" placeholder="Add a review..." required></textarea>
+                                    <button type="submit" class="post-button">Post Your Feedback</button>
+                                </form>
+                            </div>
+
+                            <div class="comments-list list-group mt-3">
+                                {% for review in review %}
+                                  <div class="list-group-item d-flex align-items-start">
+                                    
+                                    <div>
+                                      <h5 class="mb-1">{{ review.user.username }}</h5>
+                                      <p class="mb-1">{{ review.text }}</p>
+                                      <small class="text-muted">{{ review.created_at }}</small>
+                                    </div>
+                                  </div>
+                                {% empty %}
+                                  <p class="text-center text-muted">No comments yet</p>
+                                {% endfor %}
+                              </div>
+                              
+                            </div>
+                            
+                              
+
+                           
+
+
+
+
+
+
+
+                                    
+
+                                    
+                                    
+
+                                </div>
+                            </div>
+                            
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    
+    </center>
+ </div><!-- End .cart-dropdown -->
+</div><!-- End .header-right -->
+</div><!-- End .container -->
+</div><!-- End .header-middle -->
+</header><!-- End .header -->
+</nav><!-- End .pager-nav -->
+
+
+</div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+<footer class="footer">
+    <div class="footer-middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="widget widget-about">
+                        <img src="{% static 'assets/images/logo.png'%}" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                        <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+
+                        <div class="social-icons">
+                            <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                            <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                            <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                            <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+                            <a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
+                        </div><!-- End .soial-icons -->
+                    </div><!-- End .widget about-widget -->
+                </div><!-- End .col-sm-6 col-lg-3 -->
+
+                <div class="col-sm-6 col-lg-3">
+                    <div class="widget">
+                        <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+                        <ul class="widget-list">
+                            <li><a href="about.html">About Molla</a></li>
+                            <li><a href="#">How to shop on Molla</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="contact.html">Contact us</a></li>
+                            <li><a href="login.html">Log in</a></li>
+                        </ul><!-- End .widget-list -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-sm-6 col-lg-3 -->
+
+                <div class="col-sm-6 col-lg-3">
+                    <div class="widget">
+                        <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                        <ul class="widget-list">
+                            <li><a href="#">Payment Methods</a></li>
+                            <li><a href="#">Money-back guarantee!</a></li>
+                            <li><a href="#">Returns</a></li>
+                            <li><a href="#">Shipping</a></li>
+                            <li><a href="#">Terms and conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul><!-- End .widget-list -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-sm-6 col-lg-3 -->
+                <div class="col-sm-6 col-lg-3">
+                    <div class="widget">
+                        <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                        <ul class="widget-list">
+                            <li><a href="#">Sign In</a></li>
+                            <li><a href="cart.html">View Cart</a></li>
+                            <li><a href="#">My Wishlist</a></li>
+                            <li><a href="#">Track My Order</a></li>
+                            <li><a href="#">Help</a></li>
+                        </ul><!-- End .widget-list -->
+                    </div><!-- End .widget -->
+                </div><!-- End .col-sm-6 col-lg-3 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .footer-middle -->
+
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+            <figure class="footer-payments">
+                <img src="{% static 'assets/images/payments.png'%}" alt="Payment methods" width="272" height="20">
+            </figure><!-- End .footer-payments -->
+        </div><!-- End .container -->
+    </div><!-- End .footer-bottom -->
+</footer><!-- End .footer -->
+</div><!-- End .page-wrapper -->
+<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+
+            </div><!-- End .product-details-footer -->
+        </div><!-- End .product-details -->
+    </div><!-- End .col-md-6 -->
+</div><!-- End .row -->
+</div><!-- End .product-details-top -->

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Search</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Category Search</h2>
+
+        <!-- Form for category selection & search -->
+        <form method="GET">
+            <!-- Category Dropdown -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <label for="categorySelect" class="form-label fw-bold">Choose Category</label>
+                    <select id="categorySelect" class="form-select form-select-lg shadow-sm" name="category" style="border-radius: 10px;" onchange="this.form.submit()">
+                        <option value="">Select a Category</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}" {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <!-- Search Bar (Shown only if a category is selected) -->
+        {% if selected_category %}
+        <form method="GET">
+            <input type="hidden" name="category" value="{{ selected_category }}">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <input type="text" name="search" class="form-control form-control-lg shadow-sm" placeholder="Search..." value="{{ search_query }}" style="border-radius: 10px;">
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Search</button>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+
+        <!-- Results Section -->
+        {% if items %}
+        <h3 class="text-center mt-4">Search Results</h3>
+        <ul class="list-group">
+            {% for item in items %}
+            <li class="list-group-item">{{ item.name }}</li>
+            {% endfor %}
+        </ul>
+        {% elif selected_category %}
+        <p class="text-center text-muted">No results found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

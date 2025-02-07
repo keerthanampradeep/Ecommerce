@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Delivery Addresses</title>
+</head>
+<body>
+
+<h1>Your Delivery Addresses</h1>
+
+{% if delivery_addresses %}
+    <ul>
+        {% for address in delivery_addresses %}
+            <li>
+                <strong>Phone:</strong> {{ address.phone_number }}<br>
+                <strong>Address:</strong> {{ address.address_line_1 }}{% if address.address_line_2 %}, {{ address.address_line_2 }}{% endif %}<br>
+                {{ address.city }}, {{ address.state }} - {{ address.postal_code }}<br>
+                <strong>Country:</strong> {{ address.country }}<br>
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no saved delivery addresses yet.</p>
+{% endif %}
+
+<a href="{% url 'add_delivery_address' %}">Add a New Delivery Address</a>
+
+</body>
+</html>

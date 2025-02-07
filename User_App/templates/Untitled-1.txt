@@ -1,0 +1,493 @@
+class DeliveryAddress(models.Model):
+
+    user = models.ForeignKey(Viewers, on_delete=models.CASCADE) 
+    product_id=models.ForeignKey(Item,on_delete=models.CASCADE,default=1) 
+    phone_number = models.CharField(max_length=10)
+    address_line_1 = models.CharField(max_length=255)
+    address_line_2 = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    postal_code = models.CharField(max_length=20)
+    country = models.CharField(max_length=50, default='India')
+
+    def __str__(self):
+        return f"{self.full_name}, {self.city}"
+
+
+
+
+def add_delivery_address(request):
+    if 'user_id' not in request.session:
+        return redirect('login_error')
+
+    user_id=request.session['user_id']
+    data=get_object_or_404(Viewers,id=user_id)
+   
+    if request.method == "POST":
+            print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+            phone_number = request.POST['contact_num']
+            address_line_1 = request.POST['address_line_1']
+            address_line_2 = request.POST['address_line_2']
+            city = request.POST['city']
+            state = request.POST['state']
+            postal_code = request.POST['postal_code']
+            country = request.POST['country']
+            if not phone_number or not address_line_1 or not city or not state:
+                return render(request, 'add_delivery_address.html', {'error': 'Please fill out all required fields.'})
+
+
+
+            DeliveryAddress.objects.create(
+                
+                user=data,
+                phone_number=phone_number,
+                address_line_1=address_line_1,
+                address_line_2=address_line_2,
+                city=city,
+                state=state,
+                postal_code=postal_code,
+                country=country,
+            )
+            
+            return redirect('payment_page')
+    return render(request,'add_delivery_address.html') 
+
+
+
+
+
+
+
+
+
+
+class Payment(models.Model):
+
+    user = models.ForeignKey(Viewers, on_delete=models.CASCADE)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, default="Pending") 
+    delivery_address = models.ForeignKey(DeliveryAddress, on_delete=models.SET_NULL, null=True, blank=True)
+    payment_method = models.CharField(max_length=50, choices=[
+        ('credit_card', 'Credit Card'),
+        ('debit_card', 'Debit Card'),
+        ('paypal', 'PayPal'),
+        ('net_banking', 'Net Banking'),
+        ('cash_on_delivery', 'Cash on Delivery')
+    ], default='credit_card') 
+
+    def __str__(self):
+        return f"Payment by {self.user.username} - {self.status}"
+
+urlpatterns
+
+    path('add_delivery_address', views.add_delivery_address, name='add_delivery_address'),
+        path('view_delivery_addresses',views.view_delivery_address,name="view_delivery_addresses"),
+
+
+
+class Payment(models.Model):
+
+    user = models.ForeignKey(Viewers, on_delete=models.CASCADE)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, default="Pending") 
+    delivery_address = models.ForeignKey(DeliveryAddress, on_delete=models.SET_NULL, null=True, blank=True)
+    payment_method = models.CharField(max_length=50, choices=[
+        ('credit_card', 'Credit Card'),
+        ('debit_card', 'Debit Card'),
+        ('paypal', 'PayPal'),
+        ('net_banking', 'Net Banking'),
+        ('cash_on_delivery', 'Cash on Delivery')
+    ], default='credit_card') 
+
+    def __str__(self):
+        return f"Payment by {self.user.username} - {self.status}"
+payment
+def payment_details(request, payment_id):
+    try:
+        payment = Payment.objects.get(id=payment_id, user=request.user)
+    except Payment.DoesNotExist:
+        return redirect('payment_error') 
+    return render(request, 'payment_details.html', {'payment': payment})
+
+
+def create_payment(request):
+    cart_items = Cart.objects.filter(user=request.user)
+    total_amount = sum(item.total_price() for item in cart_items)
+    
+    delivery_address = DeliveryAddress.objects.filter(user=request.user).first()
+
+    
+    payment = Payment.objects.create(
+        user=request.user,
+        total_amount=total_amount,
+        status="Pending", 
+        delivery_address=delivery_address,
+        payment_method=request.POST.get('payment_method', 'credit_card') 
+    )
+
+    payment.products.set(cart_items)
+    payment.save()
+
+   
+    cart_items.delete()
+
+   
+    return redirect('payment_details', payment_id=payment.id)
+
+
+
+def update_payment_status(request, payment_id):
+    try:
+        payment = Payment.objects.get(id=payment_id, user=request.user)
+    except Payment.DoesNotExist:
+        return redirect('payment_error')
+
+    if request.method == 'POST':
+       
+        new_status = request.POST.get('status', 'Completed')  
+        payment.status = new_status
+        payment.save()
+
+        return redirect('payment_details', payment_id=payment.id)
+
+    return render(request, 'update_payment_status.html', {'payment': payment})
+
+
+def payment_error(request):
+    return render(request, 'payment_error.html')
+
+
+     
+
+
+
+
+
+
+
+
+def view_delivery_address(request):
+     delivery_addresses = DeliveryAddress.objects.filter(user=request.user)
+
+     context = {
+        'delivery_addresses': delivery_addresses
+     }
+
+     return render(request, 'view_delivery_address.html', context)
+
+def delete_delivery_address(request, pk):
+    address = get_object_or_404(DeliveryAddress, pk=pk)
+    if address.user == request.user:
+        address.delete()
+    return redirect('view_delivery_addresses')
+
+
+
+
+def buy_now(request, item_id):
+    if 'user_id' not in request.session:
+        return redirect('user_home')
+    user = get_object_or_404(Viewers, id=request.session['user_id'])
+    product = get_object_or_404(Item, id=item_id)
+    if request.method == "POST":
+        quantity = int(request.POST.get("quantity", 1))
+        try:
+            buy_now_record = BuyNow.objects.create(
+                user=user,
+                product=product,
+                quantity=quantity
+            )
+            print("BuyNow record created successfully:", buy_now_record)
+            return redirect("add_delivery_address")
+        except Exception as e:
+            print("Error creating BuyNow record:", e)
+            return render(request, "buy_now.html", {"product": product, "error": str(e)})
+    else:
+        return render(request, "buy_now.html", {"product": product})
+
+
+
+
+
+
+
+
+def add_delivery_address(request,r_id):
+    if 'user_id' not in request.session:
+        return redirect('login_error')
+
+    user_id=request.session['user_id']
+    data=get_object_or_404(Viewers,id=user_id)
+    order = BuyNow.objects.filter(id=r_id)
+    try:
+    
+        buy_now_record = get_object_or_404(BuyNow, id=r_id)
+    except Exception as e:
+        return render(request, 'add_delivery_address.html', {
+            'error': f"Order not found: {e}",
+        })
+   
+    if request.method == "POST":
+            print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+            phone_number = request.POST['contact_num']
+            address_line_1 = request.POST['address_line_1']
+            address_line_2 = request.POST['address_line_2']
+            city = request.POST['city']
+            state = request.POST['state']
+            postal_code = request.POST['postal_code']
+            country = request.POST['country']
+            if not phone_number or not address_line_1 or not city or not state:
+               return render(request, 'add_delivery_address.html', {
+                    'buy_now_record': buy_now_record,
+                    'error': 'Please fill out all required fields.'
+            })
+
+
+            DeliveryAddress.objects.create(
+                
+                user=data,
+                phone_number=phone_number,
+                address_line_1=address_line_1,
+                address_line_2=address_line_2,
+                city=city,
+                state=state,
+                orders = order,
+                postal_code=postal_code,
+                country=country,
+            )
+            
+            return redirect('payment_page')
+    return render(request,'add_delivery_address.html',{'buy_now_record': buy_now_record}) 
+
+        
+
+
+
+
+<center>
+                    <div class="container">
+                        <div class="row">
+                     <label for="largeSelect" class="form-label">Category</label>
+                     <select id="largeSelect" class="form-select form-select-lg" name="category">
+                       <option>Choose Category</option>
+                       {% for i in category %}
+                         <option value="{{i.id}}">{{i.name}}</option>
+                       {% endfor %}
+                     </center>
+                     </select>
+                   </div>
+                    
+                    <div class="container mt-4"></div>
+                    <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
+                    
+                 <div class="row">
+                        {% for i in c %}
+                        
+						<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                            
+                            <div class="card h-100 shadow-lg border-0 rounded-lg">
+							<a href="index-1.html" target="_blank">
+								<img src="{{ i.item_picture.url }}" alt="{{ i.name }}" class="card-img-top" style="height:200px;object-fit: cover;" >
+                                
+								
+							</a>
+                            
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{i.item_name}}</h5>
+
+                            
+                        <a href="{% url 'product_home' i.id%}" class="btn btn-outline-primary btn-lg">View More</a>
+                            
+						</div>
+                   
+                        </div>
+                        </div>
+                    
+                   
+                        {% endfor %}
+                        </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <div class="row"></div></div>
+        <div class="main-banner" id="top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="left-content">
+                            <div class="thumb">
+                                <div class="inner-content">
+                                    <h4>We Are Hexashop</h4>
+                                    <span>Awesome, clean &amp; creative HTML5 Template</span>
+                                    <div class="main-border-button">
+                                        <a href="#">Purchase Now!</a>
+                                    </div>
+                                </div>
+                                <img src="{% static 'assets/images/about/left-banner-image.jpg'%}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="right-content">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="right-first-image">
+                                        <div class="thumb">
+                                            <div class="inner-content">
+                                                <h4>Women</h4>
+                                                <span>Best Clothes For Women</span>
+                                            </div>
+                                            <div class="hover-content">
+                                                <div class="inner">
+                                                    <h4>Women</h4>
+                                                    <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
+                                                    <div class="main-border-button">
+                                                        <a href="#">Discover More</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <img src="{% static 'assets/images/about/baner-right-image-01.jpg'%}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="right-first-image">
+                                        <div class="thumb">
+                                            <div class="inner-content">
+                                                <h4>Men</h4>
+                                                <span>Best Clothes For Men</span>
+                                            </div>
+                                            <div class="hover-content">
+                                                <div class="inner">
+                                                    <h4>Men</h4>
+                                                    <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
+                                                    <div class="main-border-button">
+                                                        <a href="#">Discover More</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <img src="{% static 'assets/images/about/baner-right-image-02.jpg'%}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="right-first-image">
+                                        <div class="thumb">
+                                            <div class="inner-content">
+                                                <h4>Kids</h4>
+                                                <span>Best Clothes For Kids</span>
+                                            </div>
+                                            <div class="hover-content">
+                                                <div class="inner">
+                                                    <h4>Kids</h4>
+                                                    <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
+                                                    <div class="main-border-button">
+                                                        <a href="#">Discover More</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <img src="{% static 'assets/images/about/baner-right-image-03.jpg'%}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="right-first-image">
+                                        <div class="thumb">
+                                            <div class="inner-content">
+                                                <h4>Accessories</h4>
+                                                <span>Best Trend Accessories</span>
+                                            </div>
+                                            <div class="hover-content">
+                                                <div class="inner">
+                                                    <h4>Accessories</h4>
+                                                    <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
+                                                    <div class="main-border-button">
+                                                        <a href="#">Discover More</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <img src="{% static 'assets/images/about/baner-right-image-04.jpg'%}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ***** Main Banner Area End ***** -->
+  
+
+
+        
+           
+        
+           
+        
+        
+           
+                
+                    
+
+            
+
+
+
+
+    def create_payment(request, order_id):
+    if 'user_id' not in request.session:
+        return redirect('user_login')  
+
+    user = get_object_or_404(Viewers, id=request.session['user_id'])
+    buy_now_record = get_object_or_404(BuyNow, id=order_id)
+
+    if request.method == 'POST':
+        payment_method = request.POST.get('payment_method')
+
+        if not payment_method:
+            messages.error(request, "Please select a payment method.")
+            return render(request, 'payment_page.html', {'product': product})
+
+        
+        payment = Payment.objects.create(
+            user=user,
+            orders=buy_now_record,
+            payment_method=payment_method
+        )
+
+        # Success message
+        messages.success(request, "Payment successfully processed!")
+        return redirect('payment_success', payment_id=payment.id)
+
+    return render(request, 'payment_page.html', {'product': product,'buy_now_record':buy_now_record})
+
+
+
+
+
+def payment_success(request, payment_id):
+    payment = get_object_or_404(Payment, id=payment_id)
+    return render(request, 'payment_success.html', {'payment': payment})
+
+
+    tebz yscn uzrn qoei
